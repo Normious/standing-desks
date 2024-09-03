@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\BasketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,7 @@ use App\Http\Controllers\ProductController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/dashboard', function () {
@@ -41,8 +42,18 @@ Route::get('/profile', [PageController::class, 'profile'])->name('profile');
 
 Route::middleware(['auth'])->group(function () {
   Route::get('/basket', [PageController::class, 'basket'])->name('basket');
+  Route::get('/rising-desks', [PageController::class, 'rising_desks'])->name('rising_desks');
+  Route::get('/basket', [PageController::class, 'basket'])->name('basket');
+  Route::post('/basket/add/{id}', [PageController::class, 'addToBasket'])->name('basket.add');
+  Route::patch('/basket/update/{id}', [PageController::class, 'updateBasket'])->name('basket.update');
+  Route::delete('/basket/remove/{id}', [PageController::class, 'removeFromBasket'])->name('basket.remove');
+  Route::get('/checkout', [PageController::class, 'checkout'])->name('checkout');
 });
 
+
+
+// Ensure the Rising Desks route includes product data
+Route::get('/rising-desks', [PageController::class, 'rising_desks'])->name('rising_desks');
 
 
 require __DIR__.'/auth.php';

@@ -1,11 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'basket')
-
 @section('content')
-<div class="container">
-    <!-- Your content here -->
-    <div class="container mt-5">
+<div class="container mt-5">
     <h1 class="text-center mb-4">Your Basket</h1>
     
     @if(session('basket') && count(session('basket')) > 0)
@@ -28,6 +24,7 @@
                                 <td>
                                     <form action="{{ route('basket.update', $productId) }}" method="POST">
                                         @csrf
+                                        @method('PATCH')
                                         <input type="number" name="quantity" value="{{ $details['quantity'] }}" min="1" class="form-control" style="width: 70px; display: inline;">
                                         <button type="submit" class="btn btn-sm btn-primary">Update</button>
                                     </form>
@@ -53,16 +50,15 @@
                         <hr>
                         <p class="card-text">Total Items: {{ count(session('basket')) }}</p>
                         <p class="card-text">Total Price: {{ number_format(array_sum(array_column(session('basket'), 'total')), 2) }} MWK</p>
-                        <a href="{{ route('checkout.index') }}" class="btn btn-success btn-block">Proceed to Checkout</a>
+                        <a href="{{ route('checkout') }}" class="btn btn-success btn-block">Proceed to Checkout</a>
                     </div>
                 </div>
             </div>
         </div>
     @else
-		<div class="alert alert-info text-center">
+        <div class="alert alert-info text-center">
             Your basket is empty. <a href="{{ route('rising_desks') }}" class="alert-link">Continue shopping</a>
         </div>
     @endif
-</div>
 </div>
 @endsection

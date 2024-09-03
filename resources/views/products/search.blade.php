@@ -16,6 +16,12 @@
                             <h5 class="card-title">{{ $product->name }}</h5>
                             <p class="card-text">{{ $product->description }}</p>
                             <p class="card-text"><strong>${{ number_format($product->price, 2) }}</strong></p>
+                            
+                            <!-- Add to Cart Button -->
+                            <form action="{{ route('basket.add', $product->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-primary">Add to Cart</button>
+                            </form>
                         </div>
                     </div>
                 </div>
